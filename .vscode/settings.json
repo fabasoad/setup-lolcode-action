@@ -1,0 +1,22 @@
+{
+  "editor.codeActionsOnSave": {
+    "source.fixAll": true,
+    "fixAll.eslint": true,
+    "source.organizeImports": true,
+    "typescript.suggestionActions.enabled": true
+  },
+  "cSpell.words": [
+    "LOLCODE",
+    "UNSECURE",
+    "cmake",
+    "consts",
+    "evincarofautumn",
+    "mstksg",
+    "ouzi",
+    "paambaati",
+    "symbitic",
+    "unzipper",
+    "vercel"
+  ],
+  "editor.rulers": [ 80 ]
+}
