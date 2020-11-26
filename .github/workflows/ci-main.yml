@@ -34,7 +34,9 @@ jobs:
       - name: Lint
         run: yarn run lint
       - name: Security tests
-        run: yarn run security:test ${{ github.repositoryUrl }}#${{ github.sha }}
+        run: |
+          yarn run security:auth ${{ secrets.SNYK_API_TOKEN }}
+          yarn run security:test
       - name: Unit tests
         run: yarn run test
         if: startsWith(github.ref, 'refs/heads/bugfix/') || startsWith(github.ref, 'refs/heads/feature/')
