@@ -1,14 +1,14 @@
 import { error } from '@actions/core'
-import KittenInstaller from './KittenInstaller'
-import StackInstaller from './StackInstaller'
+import CmakeInstaller from './CmakeInstaller'
+import LciInstaller from './LciInstaller'
 
 export const run = async (
-  stackInstaller: IInstaller = new StackInstaller(),
-  kittenInstaller: IInstaller = new KittenInstaller(),
+  cmakeInstaller: IInstaller = new CmakeInstaller(''),
+  lciInstaller: IInstaller = new LciInstaller(''),
   err: typeof error = error) => {
   try {
-    await stackInstaller.install()
-    await kittenInstaller.install()
+    await cmakeInstaller.install()
+    await lciInstaller.install()
   } catch (e) {
     err((<Error>e).message)
   }

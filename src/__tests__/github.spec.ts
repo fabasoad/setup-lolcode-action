@@ -15,10 +15,12 @@ describe('github', () => {
   it('clone should pass successfully', () => {
     const owner: string = 'lY5L080n'
     const repo: string = 'UGI49E2i'
-    const actual: string = clone(owner, repo)
-    expect(actual).toBe(path.join(__dirname, '..', repo))
+    const tag: string = 'r6DOQto9'
+    const to: string = '27XkVvCu'
+    const actual: string = clone(owner, repo, tag, to)
+    expect(actual).toBe(path.join(to, repo))
     execSyncStub.calledOnceWithExactly(
-      `git clone https://github.com/${owner}/${repo}.git`)
+      `git clone --depth 1 --branch ${tag} https://github.com/${owner}/${repo}.git ${to}`)
   })
 
   afterEach(() => restore())

@@ -6,11 +6,12 @@ import LoggerFactory from './LoggerFactory'
 
 const log: Logger = LoggerFactory.create('github')
 
-export const clone = (owner: string, repo: string, to: string = __dirname):
-    string => {
-  fs.mkdirSync(to, { recursive: true })
-  const clonedPath: string = path.join(to, repo)
-  execSync(`git clone https://github.com/${owner}/${repo}.git ${clonedPath}`)
-  log.info(`Cloned folder is ${clonedPath}`)
-  return clonedPath
-}
+export const clone =
+  (owner: string, repo: string, tag: string, to: string = __dirname):
+      string => {
+    fs.mkdirSync(to, { recursive: true })
+    const clonedPath: string = path.join(to, repo)
+    execSync(`git clone --depth 1 --branch ${tag} https://github.com/${owner}/${repo}.git ${clonedPath}`)
+    log.info(`Cloned folder is ${clonedPath}`)
+    return clonedPath
+  }
