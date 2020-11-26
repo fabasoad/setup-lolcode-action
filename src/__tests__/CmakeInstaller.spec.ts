@@ -59,7 +59,7 @@ describe('CmakeInstaller', () => {
     items, async ({ platform, command }: IFixture) => {
       const version: string = 'C02PDk6g'
       const stackExeFileName: string = 'RAZ1Hpk4'
-      const execFilePath: string = path.join(installDir, stackExeFileName)
+      // const execFilePath: string = path.join(installDir, stackExeFileName)
       commandExistsStub.returns(false)
       osPlatformStub.returns(platform)
       const getExeFileNameMock = jest.fn(() => stackExeFileName)
