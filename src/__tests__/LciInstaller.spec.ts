@@ -67,24 +67,26 @@ describe('LciInstaller', () => {
     commandExistsStub.returns(true)
     githubCloneStub.returns('Y9xoTYs3')
 
-    const getStackExeFileNameMock = jest.fn(() => '629mkl7f')
+    const getMakeExeFileNameMock = jest.fn(() => 's0fS31kf')
+    const getLciExeFileNameMock = jest.fn(() => '629mkl7f')
     const kittenExeFileName: string = 'ORkJA6n9'
-    const getKittenExeFileNameMock = jest.fn(() => kittenExeFileName)
+    const getCmakeExeFileNameMock = jest.fn(() => kittenExeFileName)
     const findMock = jest.fn((f: string) => 'hw3a7g60')
     const cacheMock = jest.fn()
 
     const installer: LciInstaller = new LciInstaller(
       version,
       githubCloneStub,
-      { getExeFileName: getStackExeFileNameMock },
-      { getExeFileName: getKittenExeFileNameMock },
+      { getExeFileName: getLciExeFileNameMock },
+      { getExeFileName: getCmakeExeFileNameMock },
+      { getExeFileName: getMakeExeFileNameMock },
       { find: findMock },
       { cache: cacheMock })
-    expect(getKittenExeFileNameMock.mock.calls.length).toBe(1)
+    expect(getLciExeFileNameMock.mock.calls.length).toBe(1)
     await installer.install()
 
     commandExistsStub.calledOnceWithExactly(kittenExeFileName)
-    expect(getStackExeFileNameMock.mock.calls.length).toBe(0)
+    expect(getCmakeExeFileNameMock.mock.calls.length).toBe(0)
     expect(githubCloneStub.called).toBeFalsy()
     expect(execSyncStub.called).toBeFalsy()
     expect(findMock.mock.calls.length).toBe(0)
