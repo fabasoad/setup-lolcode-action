@@ -53,12 +53,9 @@ export default class LciInstaller extends InstallerBase {
     this._log.info(`Running > ${cmd1}`)
     execSync(cmd1, { stdio: 'inherit' })
 
-    this.printDir(process.cwd())
-    const make: string = this._makeProvider.getExeFileName()
-    const cmd2: string =
-      make + (os.platform() === 'win32' ? ' -f Makefile' : '')
-    this._log.info(`Running > ${make} --version`)
-    execSync(`${make} --version`, { stdio: 'inherit' })
+    const cmd2: string = os.platform() === 'win32' ?
+      `python3.exe --prefix="${repoDir}" install.py` :
+      this._makeProvider.getExeFileName()
     this._log.info(`Running > ${cmd2}`)
     execSync(cmd2, { stdio: 'inherit' })
 
