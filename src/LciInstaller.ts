@@ -1,5 +1,5 @@
 import { addPath } from '@actions/core'
-import { exec, execSync } from 'child_process'
+import { execSync } from 'child_process'
 import fs from 'fs'
 import os from 'os'
 import path from 'path'
@@ -49,28 +49,17 @@ export default class LciInstaller extends InstallerBase {
 
     process.chdir(repoDir)
 
-    this._log.info(`Running > cmake --version`)
-    exec('cmake --version', (error, stdout, stderr) => {
-      if (error) {
-        console.error(error.message)
-      } else if (stderr) {
-        console.error(stderr)
-      } else {
-        console.log(stdout)
-      }
-    })
-
     const cmd1: string = this._cmakeProvider.getExeFileName() + ' .'
     this._log.info(`Running > ${cmd1}`)
-    execSync(cmd1)
+    execSync(cmd1, { stdio: 'inherit' })
 
     const cmd2: string = this._makeProvider.getExeFileName()
     this._log.info(`Running > ${cmd2}`)
-    execSync(cmd2)
+    execSync(cmd2, { stdio: 'inherit' })
 
     const cmd3: string = 'make install'
     this._log.info(`Running > ${cmd3}`)
-    execSync(cmd3)
+    execSync(cmd3, { stdio: 'inherit' })
 
     const execFilePath: string = this._lciFinder.find(repoDir)
     addPath(path.dirname(execFilePath))
