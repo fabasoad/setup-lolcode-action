@@ -54,7 +54,7 @@ export default class LciInstaller extends InstallerBase {
     execSync(cmd1, { stdio: 'inherit' })
 
     const cmd2: string = os.platform() === 'win32' ?
-      `python install.py --prefix="${repoDir}"` :
+      `python install.py` :
       this._makeProvider.getExeFileName()
     this._log.info(`Running > ${cmd2}`)
     execSync(cmd2, { stdio: 'inherit' })
