@@ -27,7 +27,7 @@ export default class LciInstaller extends InstallerBase {
     cl: typeof clone = clone,
     lp: ICliExeNameProvider = new CliExeNameProvider(LCI_CLI_NAME),
     cp: ICliExeNameProvider = new CliExeNameProvider(CMAKE_CLI_NAME),
-    mp: ICliExeNameProvider = new CliExeNameProvider(MAKE_CLI_NAME, 'mingw32-'),
+    mp: ICliExeNameProvider = new CliExeNameProvider(MAKE_CLI_NAME),
     lciFinder: IExecutableFileFinder = new ExecutableFileFinder(LCI_CLI_NAME),
     cache: ICache = new Cache(version, LCI_CLI_NAME)) {
     super(lp)
@@ -51,8 +51,11 @@ export default class LciInstaller extends InstallerBase {
     const cmd1: string = this._cmakeProvider.getExeFileName() + ' .'
     this._log.info(`Running > ${cmd1}`)
     execSync(cmd1, { stdio: 'inherit' })
+    this._log.info(`Running > make.exe --version`)
+    execSync('make.exe --version', { stdio: 'inherit' })
 
-    const cmd2: string = this._makeProvider.getExeFileName()
+    const cmd2: string = this._makeProvider.getExeFileName() +
+      (os.platform() === 'win32' ? ' -f Makefile' : '')
     this._log.info(`Running > ${cmd2}`)
     execSync(cmd2, { stdio: 'inherit' })
 
