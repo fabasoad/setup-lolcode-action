@@ -28,10 +28,12 @@ describe('LciInstaller', () => {
     commandExistsStub.returns(false)
     githubCloneStub.returns(repoDir)
 
-    const stackExeFileName: string = '629mkl7f'
-    const getStackExeFileNameMock = jest.fn(() => stackExeFileName)
-    const kittenExeFileName: string = 'ORkJA6n9'
-    const getKittenExeFileNameMock = jest.fn(() => kittenExeFileName)
+    const makeExeFileName: string = '629mkl7f'
+    const getMakeExeFileNameMock = jest.fn(() => makeExeFileName)
+    const cmakeExeFileName: string = 'ORkJA6n9'
+    const getCmakeExeFileNameMock = jest.fn(() => cmakeExeFileName)
+    const lciExeFileName: string = 'ORkJA6n9'
+    const getLciExeFileNameMock = jest.fn(() => lciExeFileName)
 
     const execFilePath: string = 'hw3a7g60'
     const findMock = jest.fn((f: string) => execFilePath)
@@ -41,20 +43,21 @@ describe('LciInstaller', () => {
     const installer: LciInstaller = new LciInstaller(
       version,
       githubCloneStub,
-      { getExeFileName: getStackExeFileNameMock },
-      { getExeFileName: getKittenExeFileNameMock },
+      { getExeFileName: getLciExeFileNameMock },
+      { getExeFileName: getCmakeExeFileNameMock },
+      { getExeFileName: getMakeExeFileNameMock },
       { find: findMock },
       { cache: cacheMock })
-    expect(getKittenExeFileNameMock.mock.calls.length).toBe(1)
+    expect(getLciExeFileNameMock.mock.calls.length).toBe(1)
     await installer.install()
 
-    commandExistsStub.calledOnceWithExactly(kittenExeFileName)
-    expect(getStackExeFileNameMock.mock.calls.length).toBe(1)
+    commandExistsStub.calledOnceWithExactly(lciExeFileName)
+    expect(getCmakeExeFileNameMock.mock.calls.length).toBe(1)
     githubCloneStub.calledOnceWithExactly('justinmeza', repo, `v${version}`)
     execSyncStub.getCall(0).calledWithExactly(
-      `${stackExeFileName} setup --stack-yaml ${stackYamlPath}`)
+      `${cmakeExeFileName} setup --stack-yaml ${stackYamlPath}`)
     execSyncStub.getCall(1).calledWithExactly(
-      `${stackExeFileName} build --stack-yaml ${stackYamlPath}`)
+      `${cmakeExeFileName} build --stack-yaml ${stackYamlPath}`)
     expect(findMock.mock.calls.length).toBe(1)
     expect(findMock.mock.calls[0][0])
       .toBe(path.join(repoDir, '.stack-work', 'install'))
