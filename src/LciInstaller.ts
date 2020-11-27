@@ -24,17 +24,17 @@ export default class LciInstaller extends InstallerBase {
 
   constructor(
     version: string,
-    co: typeof clone = clone,
-    lciProvider: ICliExeNameProvider = new CliExeNameProvider(LCI_CLI_NAME),
-    cmakeProvider: ICliExeNameProvider = new CliExeNameProvider(CMAKE_CLI_NAME),
-    makeProvider: ICliExeNameProvider = new CliExeNameProvider(MAKE_CLI_NAME),
+    cl: typeof clone = clone,
+    lp: ICliExeNameProvider = new CliExeNameProvider(LCI_CLI_NAME),
+    cp: ICliExeNameProvider = new CliExeNameProvider(CMAKE_CLI_NAME),
+    mp: ICliExeNameProvider = new CliExeNameProvider(MAKE_CLI_NAME, 'mingw32-'),
     lciFinder: IExecutableFileFinder = new ExecutableFileFinder(LCI_CLI_NAME),
     cache: ICache = new Cache(version, LCI_CLI_NAME)) {
-    super(lciProvider)
+    super(lp)
     this._version = version
-    this._clone = co
-    this._cmakeProvider = cmakeProvider
-    this._makeProvider = makeProvider
+    this._clone = cl
+    this._cmakeProvider = cp
+    this._makeProvider = mp
     this._lciFinder = lciFinder
     this._cache = cache
     this._log = LoggerFactory.create('LciInstaller')

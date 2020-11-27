@@ -44,9 +44,6 @@ jobs:
       matrix:
         os: ['ubuntu-latest', 'macos-latest', 'windows-latest']
         version: ['0.9.1', '0.9.2', '0.9.3', '0.10.1', '0.10.2', '0.10.3', '0.10.4', '0.10.5', '0.11.1', '0.11.2']
-        install_cmake: [true, false]
-        install_make: [true, false]
-        install_lolcode: [true, false]
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v2.3.4
@@ -65,18 +62,7 @@ jobs:
         run: yarn install
       - name: Build
         run: yarn run build
-      - name: Setup cmake
-        if: ${{ matrix.install_cmake }}
-        uses: symbitic/install-cmake@master
-      - name: Setup make
-        if: ${{ matrix.install_make }}
-        uses: ouzi-dev/go-make-action@v1.5.0
       - name: Setup LOLCODE
-        if: ${{ matrix.install_lolcode }}
-        uses: fabasoad/setup-lolcode-action@v1.0.0
-        with:
-          version: ${{ matrix.version }}
-      - name: "Setup LOLCODE (skipped: ${{ matrix.install_lolcode }})"
         uses: fabasoad/setup-lolcode-action@v1.0.0
         with:
           version: ${{ matrix.version }}
