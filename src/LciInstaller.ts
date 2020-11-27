@@ -51,11 +51,12 @@ export default class LciInstaller extends InstallerBase {
     const cmd1: string = this._cmakeProvider.getExeFileName() + ' .'
     this._log.info(`Running > ${cmd1}`)
     execSync(cmd1, { stdio: 'inherit' })
-    this._log.info(`Running > make.exe --version`)
-    execSync('make.exe --version', { stdio: 'inherit' })
 
-    const cmd2: string = this._makeProvider.getExeFileName() +
-      (os.platform() === 'win32' ? ' -f Makefile' : '')
+    const make: string = this._makeProvider.getExeFileName()
+    const cmd2: string =
+      make + (os.platform() === 'win32' ? ' -f Makefile' : '')
+    this._log.info(`Running > ${make} --version`)
+    execSync(`${make} --version`, { stdio: 'inherit' })
     this._log.info(`Running > ${cmd2}`)
     execSync(cmd2, { stdio: 'inherit' })
 
