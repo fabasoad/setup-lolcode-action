@@ -44,20 +44,18 @@ export default class LciInstaller extends InstallerBase {
     const cmakeCliName: string = this._cmakeProvider.getExeFileName()
     const repoDir: string =
       this._clone(owner, repo, `v${this._version}`, this.INSTALL_DIR)
-    this._log.info(`>> Reading ${repoDir}`)
-    this.printDir(repoDir)
 
-    const cmd1: string = `${cmakeCliName} ${repoDir}`
+    process.chdir(repoDir)
+
+    const cmd1: string = `${cmakeCliName} .`
     this._log.info(`Running > ${cmd1}`)
     execSync(cmd1)
 
-    const opts: string = `--directory=${repoDir}`
-
-    const cmd2: string = `make ${opts}`
+    const cmd2: string = 'make'
     this._log.info(`Running > ${cmd2}`)
     execSync(cmd2)
 
-    const cmd3: string = `make ${opts} install`
+    const cmd3: string = 'make install'
     this._log.info(`Running > ${cmd3}`)
     execSync(cmd3)
 
