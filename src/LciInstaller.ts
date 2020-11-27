@@ -41,15 +41,19 @@ export default class LciInstaller extends InstallerBase {
   protected async installInternal(): Promise<void> {
     const owner: string = 'justinmeza'
     const repo: string = 'lci'
-    const cmakeCliName: string = this._cmakeProvider.getExeFileName()
     const repoDir: string =
       this._clone(owner, repo, `v${this._version}`, this.INSTALL_DIR)
 
+    this._log.info('------- 1 -------')
+    this._log.info(`>> __dirname: ${__dirname}`)
+    this._log.info(`>> process.cwd(): ${process.cwd()}`)
     process.chdir(repoDir)
-    this._log.info(`Current dir is ${__dirname}. Repo dir is ${repoDir}`)
+    this._log.info('------- 2 -------')
+    this._log.info(`>> __dirname: ${__dirname}`)
+    this._log.info(`>> process.cwd(): ${process.cwd()}`)
     this.printDir(__dirname)
 
-    const cmd1: string = `${cmakeCliName} .`
+    const cmd1: string = this._cmakeProvider.getExeFileName() + ' .'
     this._log.info(`Running > ${cmd1}`)
     execSync(cmd1)
 
