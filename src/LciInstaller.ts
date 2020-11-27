@@ -46,6 +46,8 @@ export default class LciInstaller extends InstallerBase {
       this._clone(owner, repo, `v${this._version}`, this.INSTALL_DIR)
 
     process.chdir(repoDir)
+    this._log.info(`Current dir is ${__dirname}. Repo dir is ${repoDir}`)
+    this.printDir(__dirname)
 
     const cmd1: string = `${cmakeCliName} .`
     this._log.info(`Running > ${cmd1}`)
