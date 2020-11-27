@@ -1,5 +1,6 @@
 import { addPath } from '@actions/core'
 import { execSync } from 'child_process'
+import fs from 'fs'
 import os from 'os'
 import path from 'path'
 import { Logger } from 'winston'
@@ -52,6 +53,7 @@ export default class LciInstaller extends InstallerBase {
     this._log.info(`Running > ${cmd1}`)
     execSync(cmd1, { stdio: 'inherit' })
 
+    this.printDir(process.cwd())
     const make: string = this._makeProvider.getExeFileName()
     const cmd2: string =
       make + (os.platform() === 'win32' ? ' -f Makefile' : '')
@@ -63,5 +65,10 @@ export default class LciInstaller extends InstallerBase {
     const execFilePath: string = this._lciFinder.find(repoDir)
     addPath(path.dirname(execFilePath))
     this._cache.cache(execFilePath)
+  }
+
+  private printDir(dir: string): void {
+    this._log.info(`Print ${dir}`)
+    fs.readdirSync(dir).forEach((f) => console.log(f))
   }
 }
