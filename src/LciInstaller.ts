@@ -1,5 +1,6 @@
 import { addPath } from '@actions/core'
 import { execSync } from 'child_process'
+import fs from 'fs'
 import os from 'os'
 import path from 'path'
 import { Logger } from 'winston'
@@ -43,6 +44,8 @@ export default class LciInstaller extends InstallerBase {
     const cmakeCliName: string = this._cmakeProvider.getExeFileName()
     const repoDir: string =
       this._clone(owner, repo, `v${this._version}`, this.INSTALL_DIR)
+    this._log.info(`>> Reading ${repoDir}`)
+    this.printDir(repoDir)
 
     const cmd1: string = `${cmakeCliName} ${repoDir}`
     this._log.info(`Running > ${cmd1}`)
@@ -61,5 +64,9 @@ export default class LciInstaller extends InstallerBase {
     const execFilePath: string = this._lciFinder.find(repoDir)
     addPath(path.dirname(execFilePath))
     this._cache.cache(execFilePath)
+  }
+
+  private printDir(dir: string): void {
+    fs.readdirSync(dir).forEach((f) => console.log(f))
   }
 }
