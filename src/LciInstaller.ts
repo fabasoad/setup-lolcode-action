@@ -53,9 +53,11 @@ export default class LciInstaller extends InstallerBase {
     this._log.info(`>> process.cwd(): ${process.cwd()}`)
     this.printDir(process.cwd())
 
+    this._log.info(`Running > cmake --version`)
+    execSync('cmake --version')
+
     const cmd1: string = this._cmakeProvider.getExeFileName() + ' .'
     this._log.info(`Running > pwd && ${cmd1}`)
-    execSync('pwd')
     execSync(cmd1)
 
     const cmd2: string = 'make'
