@@ -51,4 +51,7 @@ Hello World!
 Currently this GitHub Actions doesn't support the following cases:
 
 1. OS: [Windows](https://github.com/justinmeza/lci/issues/44)
-1. LCI version: [0.9.1](https://github.com/fabasoad/setup-lolcode-action/actions/runs/389983860), [0.10.1](https://github.com/fabasoad/setup-lolcode-action/runs/1470017934?check_suite_focus=true)
+1. LCI version:
+    1. `0.9.1` [for Linux](https://github.com/fabasoad/setup-lolcode-action/actions/runs/389983860)
+    1. `0.10.1` [for MacOS](https://github.com/fabasoad/setup-lolcode-action/actions/runs/389991819)
+    1. 
