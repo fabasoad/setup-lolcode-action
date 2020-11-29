@@ -1,7 +1,7 @@
 {
   "name": "setup-lolcode-action",
   "version": "1.0.0",
-  "description": "This GitHub action installs LOLCODE interpreter",
+  "description": "This GitHub action installs LCI - LOLCODE interpreter",
   "main": "dist/index.js",
   "repository": {
     "type": "git",

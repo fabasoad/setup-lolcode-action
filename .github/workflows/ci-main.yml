@@ -98,7 +98,7 @@ jobs:
         run: yarn install
       - name: Build
         run: yarn run build
-      - name: Setup LOLCODE
+      - name: Setup LCI
         uses: ./
         with:
           version: ${{ matrix.version }}

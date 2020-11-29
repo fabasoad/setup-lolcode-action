@@ -87,7 +87,7 @@ jobs:
         run: yarn install
       - name: Build
         run: yarn run build
-      - name: Setup LOLCODE
+      - name: Setup LCI
         uses: fabasoad/setup-lolcode-action@v1.0.0
         with:
           version: ${{ matrix.version }}

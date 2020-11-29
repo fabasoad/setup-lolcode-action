@@ -1,4 +1,4 @@
-# Setup LOLCODE
+# Setup LCI - LOLCODE interpreter
 
 ![GitHub release](https://img.shields.io/github/v/release/fabasoad/setup-lolcode-action?include_prereleases) ![CI (latest)](https://github.com/fabasoad/setup-lolcode-action/workflows/CI%20(latest)/badge.svg) ![CI (main)](https://github.com/fabasoad/setup-lolcode-action/workflows/CI%20(main)/badge.svg) ![YAML Lint](https://github.com/fabasoad/setup-lolcode-action/workflows/YAML%20Lint/badge.svg) ![CodeQL](https://github.com/fabasoad/setup-lolcode-action/workflows/CodeQL/badge.svg) [![Total alerts](https://img.shields.io/lgtm/alerts/g/fabasoad/setup-lolcode-action.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/fabasoad/setup-lolcode-action/alerts/) [![Language grade: JavaScript](https://img.shields.io/lgtm/grade/javascript/g/fabasoad/setup-lolcode-action.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/fabasoad/setup-lolcode-action/context:javascript) [![Maintainability](https://api.codeclimate.com/v1/badges/7c26e57f2c17d638150d/maintainability)](https://codeclimate.com/github/fabasoad/setup-lolcode-action/maintainability) [![Test Coverage](https://api.codeclimate.com/v1/badges/7c26e57f2c17d638150d/test_coverage)](https://codeclimate.com/github/fabasoad/setup-lolcode-action/test_coverage) [![Known Vulnerabilities](https://snyk.io/test/github/fabasoad/setup-lolcode-action/badge.svg?targetFile=package.json)](https://snyk.io/test/github/fabasoad/setup-lolcode-action?targetFile=package.json)
 
@@ -24,7 +24,7 @@ KTHXBYE
 ### Workflow configuration
 
 ```yaml
-name: Setup LOLCODE
+name: Setup LCI
 
 on: push
 

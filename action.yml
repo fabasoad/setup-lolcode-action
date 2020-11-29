@@ -1,7 +1,7 @@
 ---
 name: 'Setup LOLCODE'
 author: Yevhen Fabizhevskyi
-description: 'This action sets up a LOLCODE interpreter.'
+description: 'This action sets up a LOLCODE interpreter called LCI.'
 branding:
   icon: terminal
   color: gray-dark
