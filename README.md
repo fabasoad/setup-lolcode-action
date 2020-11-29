@@ -57,3 +57,4 @@ Hello World!
 | 0.10.2  | MacOS   | [&#x2197;](https://github.com/fabasoad/setup-lolcode-action/actions/runs/390000387) |
 | 0.10.3  | MacOS   | [&#x2197;](https://github.com/fabasoad/setup-lolcode-action/actions/runs/390006821) |
 | 0.10.4  | MacOS   | [&#x2197;](https://github.com/fabasoad/setup-lolcode-action/actions/runs/390009999) |
+| 0.11.1  | MacOS   | [&#x2197;](https://github.com/fabasoad/setup-lolcode-action/actions/runs/390014038) |
