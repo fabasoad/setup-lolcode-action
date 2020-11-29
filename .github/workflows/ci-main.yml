@@ -14,7 +14,6 @@ env:
 jobs:
   unit_tests:
     name: Unit tests
-    if: false
     timeout-minutes: 15
     runs-on: ubuntu-latest
     steps:
