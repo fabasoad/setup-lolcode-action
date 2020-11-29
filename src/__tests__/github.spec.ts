@@ -1,17 +1,13 @@
 // eslint-disable-next-line camelcase
-import child_process, { ExecSyncOptions } from 'child_process'
+import { execSync } from 'child_process'
+import { mkdirSync } from 'fs'
 import path from 'path'
-import { restore, SinonStub, stub } from 'sinon'
 import { clone } from '../github'
 
+jest.mock('child_process')
+jest.mock('fs')
+
 describe('github', () => {
-  let execSyncStub: SinonStub<
-    [command: string, options?: ExecSyncOptions], Buffer>
-
-  beforeEach(() => {
-    execSyncStub = stub(child_process, 'execSync')
-  })
-
   it('clone should pass successfully', () => {
     const owner: string = 'lY5L080n'
     const repo: string = 'UGI49E2i'
@@ -19,9 +15,8 @@ describe('github', () => {
     const to: string = '27XkVvCu'
     const actual: string = clone(owner, repo, tag, to)
     expect(actual).toBe(path.join(to, repo))
-    execSyncStub.calledOnceWithExactly(
-      `git clone --depth 1 --branch ${tag} https://github.com/${owner}/${repo}.git ${to}`)
+    expect(mkdirSync).toHaveBeenCalledWith(to, { recursive: true })
+    expect(execSync).toHaveBeenCalledWith(
+      `git clone --depth 1 --branch ${tag} https://github.com/${owner}/${repo}.git ${to}/${repo}`)
   })
-
-  afterEach(() => restore())
 })

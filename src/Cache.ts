@@ -1,39 +1,32 @@
 import { addPath } from '@actions/core'
 import { cacheDir } from '@actions/tool-cache'
-import fs from 'fs'
+import { chmodSync } from 'fs'
 import path from 'path'
 import { Logger } from 'winston'
 import CliExeNameProvider from './CliExeNameProvider'
 import LoggerFactory from './LoggerFactory'
 
 export default class Cache implements ICache {
-  private ap: typeof addPath
-  private cd: typeof cacheDir
-  private version: string
-  private provider: ICliExeNameProvider
-  private log: Logger
+  private _log: Logger = LoggerFactory.create('Cache')
+  private _version: string
+  private _provider: ICliExeNameProvider
 
   constructor(
     version: string,
     cliName: string,
-    provider: ICliExeNameProvider = new CliExeNameProvider(cliName),
-    ap: typeof addPath = addPath,
-    cd: typeof cacheDir = cacheDir) {
-    this.version = version
-    this.ap = ap
-    this.cd = cd
-    this.provider = provider
-    this.log = LoggerFactory.create('Cache')
+    provider: ICliExeNameProvider = new CliExeNameProvider(cliName)) {
+    this._version = version
+    this._provider = provider
   }
 
   async cache(execFilePath: string): Promise<void> {
-    fs.chmodSync(execFilePath, '777')
-    this.log.info(
+    chmodSync(execFilePath, '777')
+    this._log.info(
       `Access permissions of ${execFilePath} file was changed to 777.`)
     const folderPath: string = path.dirname(execFilePath)
-    const cachedPath = await this.cd(
-      folderPath, this.provider.getExeFileName(), this.version)
-    this.log.info(`Cached dir is ${cachedPath}`)
-    this.ap(cachedPath)
+    const cachedPath = await cacheDir(
+      folderPath, this._provider.getExeFileName(), this._version)
+    this._log.info(`Cached dir is ${cachedPath}`)
+    addPath(cachedPath)
   }
 }
