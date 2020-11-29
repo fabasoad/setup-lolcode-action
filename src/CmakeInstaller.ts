@@ -15,7 +15,7 @@ import LoggerFactory from './LoggerFactory'
 export default class CmakeInstaller extends InstallerBase {
   private INSTALL_DIR: string = path.join(os.homedir(), '.local', 'bin')
   private _log: Logger = LoggerFactory.create('CmakeInstaller')
-  private _version: string = '3.19.1'
+  private _version: string
   private _exeFileFinder: IExecutableFileFinder
   private _cache: ICache
 
