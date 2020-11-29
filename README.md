@@ -48,15 +48,11 @@ Hello World!
 
 ## Unsupported LCI versions
 
-| Version | OS      | Link                                                                                |
-|---------|---------|-------------------------------------------------------------------------------------|
-| All     | Windows | [&#x2197;](https://github.com/justinmeza/lci/issues/44)                             |
-| 0.9.1   | Linux   | [&#x2197;](https://github.com/fabasoad/setup-lolcode-action/actions/runs/389983860) |
-Currently this GitHub Actions doesn't support the following cases:
-
-1. OS: [Windows](https://github.com/justinmeza/lci/issues/44)
-1. LCI version:
-    1. `0.9.1` [for Linux](https://github.com/fabasoad/setup-lolcode-action/actions/runs/389983860)
-    1. `0.9.1` [for MacOS](https://github.com/fabasoad/setup-lolcode-action/actions/runs/389997992)
-    1. `0.10.1` [for MacOS](https://github.com/fabasoad/setup-lolcode-action/actions/runs/389991819)
-    1. `0.10.2` [for MacOS](https://github.com/fabasoad/setup-lolcode-action/actions/runs/390000387)
+| Version | OS      | Link                                                                                 |
+|---------|---------|--------------------------------------------------------------------------------------|
+| All     | Windows | [&#x2197;](https://github.com/justinmeza/lci/issues/44)                              |
+| 0.9.1   | Linux   | [&#x2197;](https://github.com/fabasoad/setup-lolcode-action/actions/runs/389983860)  |
+| 0.9.1   | MacOS   | [&#x2197;](https://github.com/fabasoad/setup-lolcode-action/actions/runs/389997992)  |
+| 0.10.1  | MacOS   | [&#x2197;](https://github.com/fabasoad/setup-lolcode-action/actions/runs/389991819)  |
+| 0.10.2  | MacOS   | [&#x2197;](https://github.com/fabasoad/setup-lolcode-action/actions/runs/390000387)  |
+| 0.10.3  | MacOS   | [&#x2197;](https://github.com/fabasoad/setup-lolcode-action/actions/runs/1470090092) |
