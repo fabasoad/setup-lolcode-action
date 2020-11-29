@@ -48,9 +48,10 @@ Hello World!
 
 ## Unsupported LCI versions
 
-| Version | OS      | Link                                                    |
-|---------|---------|---------------------------------------------------------|
-| All     | Windows | [&#x2197;](https://github.com/justinmeza/lci/issues/44) |
+| Version | OS      | Link                                                                                |
+|---------|---------|-------------------------------------------------------------------------------------|
+| All     | Windows | [&#x2197;](https://github.com/justinmeza/lci/issues/44)                             |
+| 0.9.1   | Linux   | [&#x2197;](https://github.com/fabasoad/setup-lolcode-action/actions/runs/389983860) |
 Currently this GitHub Actions doesn't support the following cases:
 
 1. OS: [Windows](https://github.com/justinmeza/lci/issues/44)
