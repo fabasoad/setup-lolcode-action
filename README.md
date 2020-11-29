@@ -46,8 +46,11 @@ Run lci ./hello-world.lc
 Hello World!
 ```
 
-## Restrictions
+## Unsupported LCI versions
 
+| Version | OS      | Link                                                    |
+|---------|---------|---------------------------------------------------------|
+| All     | Windows | [&#x2197;](https://github.com/justinmeza/lci/issues/44) |
 Currently this GitHub Actions doesn't support the following cases:
 
 1. OS: [Windows](https://github.com/justinmeza/lci/issues/44)
@@ -55,4 +58,4 @@ Currently this GitHub Actions doesn't support the following cases:
     1. `0.9.1` [for Linux](https://github.com/fabasoad/setup-lolcode-action/actions/runs/389983860)
     1. `0.9.1` [for MacOS](https://github.com/fabasoad/setup-lolcode-action/actions/runs/389997992)
     1. `0.10.1` [for MacOS](https://github.com/fabasoad/setup-lolcode-action/actions/runs/389991819)
-    1.
+    1. `0.10.2` [for MacOS](https://github.com/fabasoad/setup-lolcode-action/actions/runs/390000387)
