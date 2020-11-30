@@ -1,10 +1,15 @@
 ---
 name: 'Setup LOLCODE'
 author: Yevhen Fabizhevskyi
-description: 'This action sets up a LOLCODE interpreter.'
+description: 'This action sets up a LOLCODE interpreter called LCI.'
 branding:
   icon: terminal
   color: gray-dark
+inputs:
+  version:
+    description: 'LCI version.'
+    required: false
+    default: '0.11.2'
 runs:
   using: 'node12'
   main: 'dist/index.js'

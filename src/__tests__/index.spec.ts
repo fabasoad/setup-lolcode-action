@@ -1,4 +1,4 @@
-import { error } from '@actions/core'
+import { error, getInput } from '@actions/core'
 import { assert } from 'chai'
 import itParam from 'mocha-param'
 import { run } from '../index'
@@ -14,8 +14,8 @@ describe('index > run', () => {
 
   interface INegativeTestFixture {
     name: string
-    stackInstaller: any
-    kittenInstaller: any
+    cmakeInstaller: any
+    lciInstaller: any
     expectedCalls: number
   }
 
@@ -31,38 +31,45 @@ describe('index > run', () => {
   }
 
   const items: INegativeTestFixture[] = [{
-    stackInstaller: new InstallerMock(),
-    kittenInstaller: new InstallerErrorMock(expectedErrorMessage),
-    name: 'stackInstaller',
+    cmakeInstaller: new InstallerMock(),
+    lciInstaller: new InstallerErrorMock(expectedErrorMessage),
+    name: 'cmakeInstaller',
     expectedCalls: 1
   }, {
-    stackInstaller: new InstallerErrorMock(expectedErrorMessage),
-    kittenInstaller: new InstallerMock(),
-    name: 'kittenInstaller',
+    cmakeInstaller: new InstallerErrorMock(expectedErrorMessage),
+    lciInstaller: new InstallerMock(),
+    name: 'lciInstaller',
     expectedCalls: 0
   }]
 
+  let getInputMocked
   let errorMocked
 
   beforeEach(() => {
+    getInputMocked = jest.fn((m: string) => assert.isNotNull(m))
     errorMocked = jest.fn((m: string) => assert.isNotNull(m))
   })
 
   it('should run successfully', async () => {
-    const stackInstallerMock: InstallerMock = new InstallerMock()
-    const kittenInstallerMock: InstallerMock = new InstallerMock()
+    const cmakeInstallerMock: InstallerMock = new InstallerMock()
+    const lciInstallerMock: InstallerMock = new InstallerMock()
     await run(
-      stackInstallerMock, kittenInstallerMock, errorMocked as typeof error)
-    expect(stackInstallerMock.calls).toBe(1)
-    expect(kittenInstallerMock.calls).toBe(1)
+      getInputMocked as typeof getInput,
+      errorMocked as typeof error,
+      cmakeInstallerMock,
+      lciInstallerMock
+    )
+    expect(cmakeInstallerMock.calls).toBe(1)
+    expect(lciInstallerMock.calls).toBe(1)
   })
 
   itParam('should print error (${value.name})',
     items, async (item: INegativeTestFixture) => {
       await run(
-        item.stackInstaller,
-        item.kittenInstaller,
-        errorMocked as typeof error
+        getInputMocked as typeof getInput,
+        errorMocked as typeof error,
+        item.cmakeInstaller,
+        item.lciInstaller
       )
       expect(item[item.name].calls).toBe(item.expectedCalls)
       expect(errorMocked.mock.calls.length).toBe(1)

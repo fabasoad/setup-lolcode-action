@@ -32,9 +32,9 @@ describe('ExecutableFileFinder', () => {
     const finder: ExecutableFileFinder = new ExecutableFileFinder(cliName, {
       getExeFileName: (): string => SUFFIX
     })
-    const actual: string = finder.find(folderPath, cliName)
-    globSyncStub.calledOnceWithExactly(
-      `${folderPath}${path.sep}**${path.sep}${cliName}`)
+    const actual: string = finder.find(folderPath)
+    expect(globSyncStub.withArgs(
+      `${folderPath}${path.sep}**${path.sep}${cliName}*`).callCount).toBe(1)
     expect(actual).toBe(files[0])
   })
 
@@ -48,11 +48,11 @@ describe('ExecutableFileFinder', () => {
         getExeFileName: (): string => item.suffix
       })
       try {
-        finder.find(folderPath, cliName)
+        finder.find(folderPath)
       } catch (e) {
         expect((<Error>e).message).toContain(item.message)
-        globSyncStub.calledOnceWithExactly(
-          `${folderPath}${path.sep}**${path.sep}${cliName}`)
+        expect(globSyncStub.withArgs(
+          `${folderPath}${path.sep}**${path.sep}${cliName}*`).callCount).toBe(1)
         return
       }
       fail()

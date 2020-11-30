@@ -1,16 +1,18 @@
 import os from 'os'
 
 export default class CliExeNameProvider implements ICliExeNameProvider {
-  private cliName: string
+  private _cliName: string
+
   constructor(cliName: string) {
-    this.cliName = cliName
+    this._cliName = cliName
   }
+
   getExeFileName(): string {
     switch (os.platform()) {
     case 'win32':
-      return `${this.cliName}.exe`
+      return `${this._cliName}.exe`
     default:
-      return this.cliName
+      return this._cliName
     }
   }
 }

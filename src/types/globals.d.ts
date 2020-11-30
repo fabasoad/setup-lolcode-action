@@ -4,7 +4,7 @@ interface IInstaller {
 }
 
 interface IExecutableFileFinder {
-  find(folderPath: string, cliName: string): string
+  find(folderPath: string): string
 }
 
 interface ICache {
