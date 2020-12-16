@@ -88,7 +88,7 @@ jobs:
       - name: Build
         run: yarn run build
       - name: Setup LCI
-        uses: fabasoad/setup-lolcode-action@v1.0.0
+        uses: fabasoad/setup-lolcode-action@main
         with:
           version: ${{ matrix.version }}
       - name: Run script
