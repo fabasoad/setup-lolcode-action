@@ -6,16 +6,20 @@
     "typescript.suggestionActions.enabled": true
   },
   "cSpell.words": [
-    "codeql",
     "LOLCODE",
     "UNSECURE",
     "cmake",
+    "codeql",
     "consts",
+    "issuehunt",
     "justinmeza",
+    "liberapay",
     "mingw",
     "mstksg",
     "ouzi",
     "paambaati",
+    "semver",
+    "simbo",
     "symbitic",
     "unzipper",
     "vercel"
