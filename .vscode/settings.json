@@ -9,6 +9,7 @@
     "KTHXBYE",
     "LOLCODE",
     "UNSECURE",
+    "autobuild",
     "cmake",
     "codeql",
     "consts",
