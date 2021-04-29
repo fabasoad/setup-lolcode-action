@@ -4,9 +4,7 @@ updates:
   - package-ecosystem: "npm"
     directory: "/"
     schedule:
-      interval: "daily"
-    assignees:
-      - "dependabot"
+      interval: "monthly"
     reviewers:
       - "fabasoad"
     labels:
@@ -14,9 +12,7 @@ updates:
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
-      interval: "daily"
-    assignees:
-      - "dependabot"
+      interval: "monthly"
     reviewers:
       - "fabasoad"
     labels:
