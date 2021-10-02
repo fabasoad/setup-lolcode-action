@@ -37,7 +37,7 @@
     "@types/chai": "4.2.21",
     "@types/command-exists": "1.2.0",
     "@types/glob": "7.1.4",
-    "@types/jest": "27.0.1",
+    "@types/jest": "27.0.2",
     "@types/node": "16.7.10",
     "@types/sinon": "10.0.4",
     "@typescript-eslint/eslint-plugin": "4.30.0",
