@@ -69,7 +69,7 @@ describe('CmakeInstaller', () => {
       string | undefined>
   let osPlatformStub: SinonStub<[], string>
   let execSyncStub: SinonStub<
-    [command: string, options?: ExecSyncOptions], Buffer>
+    [command: string, options?: ExecSyncOptions], string | Buffer>
   let addPathStub: SinonStub<[inputPath: string], void>
   let commandExistsStub: SinonStub<[commandName: string], boolean>
 

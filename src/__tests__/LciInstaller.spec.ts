@@ -18,7 +18,7 @@ describe('LciInstaller', () => {
   let githubCloneStub: SinonStub<
     [owner: string, repo: string, tag: string, to: string], string>
   let execSyncStub: SinonStub<
-    [command: string, options?: ExecSyncOptions], Buffer>
+    [command: string, options?: ExecSyncOptions], string | Buffer>
   let commandExistsStub: SinonStub<[commandName: string], boolean>
   let chdirStub: SinonStub<[directory: string], void>
   let addPathStub: SinonStub<[inputPath: string], void>
