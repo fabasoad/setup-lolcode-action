@@ -6,9 +6,9 @@ This action sets up a [LOLCODE](http://www.lolcode.org/) interpreter called [LCI
 
 ## Inputs
 
-| Name    | Required | Description                                                                      | Default   | Possible values          |
-|---------|----------|----------------------------------------------------------------------------------|-----------|--------------------------|
-| version | No       | LCI version that can be found [here](https://github.com/justinmeza/lci/releases) | `0.11.2`  | `0.9.2`, `0.10.3`, etc.  |
+| Name    | Required | Description                                                                  | Default  | Possible values         |
+|---------|----------|------------------------------------------------------------------------------|----------|-------------------------|
+| version | No       | LCI version that can be found [here](https://github.com/justinmeza/lci/tags) | `0.11.2` | `0.9.2`, `0.10.3`, etc. |
 
 ## Example usage
 
