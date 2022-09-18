@@ -13,11 +13,11 @@ import InstallerBase from './InstallerBase'
 import LoggerFactory from './LoggerFactory'
 
 export default class CmakeInstaller extends InstallerBase {
-  private INSTALL_DIR: string = path.join(os.homedir(), '.local', 'bin')
-  private _log: Logger = LoggerFactory.create('CmakeInstaller')
-  private _version: string
-  private _exeFileFinder: IExecutableFileFinder
-  private _cache: ICache
+  private readonly INSTALL_DIR: string = path.join(os.homedir(), '.local', 'bin')
+  private readonly _log: Logger = LoggerFactory.create(CmakeInstaller.name)
+  private readonly _version: string
+  private readonly _exeFileFinder: IExecutableFileFinder
+  private readonly _cache: ICache
 
   constructor(
     version: string,

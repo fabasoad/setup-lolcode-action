@@ -5,16 +5,16 @@ import CliExeNameProvider from './CliExeNameProvider'
 import LoggerFactory from './LoggerFactory'
 
 export default class ExecutableFileFinder implements IExecutableFileFinder {
-  private _cliName: string
-  private _provider: ICliExeNameProvider
-  private _log: Logger
+  private readonly _cliName: string
+  private readonly _provider: ICliExeNameProvider
+  private readonly _log: Logger =
+    LoggerFactory.create(ExecutableFileFinder.name)
 
   constructor(
     cliName: string,
     provider: ICliExeNameProvider = new CliExeNameProvider(cliName)) {
     this._cliName = cliName
     this._provider = provider
-    this._log = LoggerFactory.create('ExecutableFileFinder')
   }
 
   find(folderPath: string): string {

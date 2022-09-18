@@ -1,4 +1,4 @@
-import { error, getInput } from '@actions/core'
+import { setFailed, getInput } from '@actions/core'
 import { assert } from 'chai'
 import itParam from 'mocha-param'
 import { run } from '../index'
@@ -21,7 +21,7 @@ describe('index > run', () => {
 
   const expectedErrorMessage: string = '0a77hs2u'
   class InstallerErrorMock {
-    private msg: string
+    private readonly msg: string
     constructor(msg: string) {
       this.msg = msg
     }
@@ -43,11 +43,11 @@ describe('index > run', () => {
   }]
 
   let getInputMocked
-  let errorMocked
+  let setFailedMocked
 
   beforeEach(() => {
     getInputMocked = jest.fn((m: string) => assert.isNotNull(m))
-    errorMocked = jest.fn((m: string) => assert.isNotNull(m))
+    setFailedMocked = jest.fn((m: string) => assert.isNotNull(m))
   })
 
   it('should run successfully', async () => {
@@ -55,7 +55,7 @@ describe('index > run', () => {
     const lciInstallerMock: InstallerMock = new InstallerMock()
     await run(
       getInputMocked as typeof getInput,
-      errorMocked as typeof error,
+      setFailedMocked as typeof setFailed,
       cmakeInstallerMock,
       lciInstallerMock
     )
@@ -67,16 +67,16 @@ describe('index > run', () => {
     items, async (item: INegativeTestFixture) => {
       await run(
         getInputMocked as typeof getInput,
-        errorMocked as typeof error,
+        setFailedMocked as typeof setFailed,
         item.cmakeInstaller,
         item.lciInstaller
       )
       expect(item[item.name].calls).toBe(item.expectedCalls)
-      expect(errorMocked.mock.calls.length).toBe(1)
-      expect(errorMocked.mock.calls[0][0]).toBe(expectedErrorMessage)
+      expect(setFailedMocked.mock.calls.length).toBe(1)
+      expect(setFailedMocked.mock.calls[0][0]).toBe(expectedErrorMessage)
     })
 
   afterEach(() => {
-    errorMocked.mockReset()
+    setFailedMocked.mockReset()
   })
 })

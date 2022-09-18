@@ -1,7 +1,7 @@
 import os from 'os'
 
 export default class CliExeNameProvider implements ICliExeNameProvider {
-  private _cliName: string
+  private readonly _cliName: string
 
   constructor(cliName: string) {
     this._cliName = cliName
