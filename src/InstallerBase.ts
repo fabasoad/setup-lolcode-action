@@ -3,12 +3,11 @@ import { Logger } from 'winston'
 import LoggerFactory from './LoggerFactory'
 
 export default abstract class InstallerBase implements IInstaller {
-  private exeFileName: string
-  private log: Logger
+  private readonly exeFileName: string
+  private readonly log: Logger = LoggerFactory.create(InstallerBase.name)
 
-  constructor(provider: ICliExeNameProvider) {
+  protected constructor(provider: ICliExeNameProvider) {
     this.exeFileName = provider.getExeFileName()
-    this.log = LoggerFactory.create(this.constructor.name)
   }
 
   protected abstract installInternal(): Promise<void>

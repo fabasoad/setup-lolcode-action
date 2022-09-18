@@ -8,7 +8,7 @@ This action sets up a [LOLCODE](http://www.lolcode.org/) interpreter called [LCI
 
 | Name    | Required | Description                                                                  | Default  | Possible values         |
 |---------|----------|------------------------------------------------------------------------------|----------|-------------------------|
-| version | No       | LCI version that can be found [here](https://github.com/justinmeza/lci/tags) | `0.11.2` | `0.9.2`, `0.10.3`, etc. |
+| version | No       | LCI version that can be found [here](https://github.com/justinmeza/lci/tags) | `0.11.2` | `0.9.2`, `0.10.5`, etc. |
 
 ## Example usage
 
@@ -48,13 +48,8 @@ Hello World!
 
 ## Unsupported LCI versions
 
-| Version | OS      | Link                                                                                |
-|---------|---------|-------------------------------------------------------------------------------------|
-| All     | Windows | [&#x2197;](https://github.com/justinmeza/lci/issues/44)                             |
-| 0.9.1   | Linux   | [&#x2197;](https://github.com/fabasoad/setup-lolcode-action/actions/runs/389983860) |
-| 0.9.1   | MacOS   | [&#x2197;](https://github.com/fabasoad/setup-lolcode-action/actions/runs/389997992) |
-| 0.10.1  | MacOS   | [&#x2197;](https://github.com/fabasoad/setup-lolcode-action/actions/runs/389991819) |
-| 0.10.2  | MacOS   | [&#x2197;](https://github.com/fabasoad/setup-lolcode-action/actions/runs/390000387) |
-| 0.10.3  | MacOS   | [&#x2197;](https://github.com/fabasoad/setup-lolcode-action/actions/runs/390006821) |
-| 0.10.4  | MacOS   | [&#x2197;](https://github.com/fabasoad/setup-lolcode-action/actions/runs/390009999) |
-| 0.11.1  | MacOS   | [&#x2197;](https://github.com/fabasoad/setup-lolcode-action/actions/runs/390014038) |
+| OS      | Version                                       |
+|---------|-----------------------------------------------|
+| Windows | All                                           |
+| Linux   | 0.9.1                                         |
+| MacOS   | 0.9.1, 0.10.1, 0.10.2, 0.10.3, 0.10.4, 0.11.1 |

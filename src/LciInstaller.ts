@@ -12,14 +12,15 @@ import InstallerBase from './InstallerBase'
 import LoggerFactory from './LoggerFactory'
 
 export default class LciInstaller extends InstallerBase {
-  private INSTALL_DIR: string = path.join(os.homedir(), '.local', 'bin')
-  private _log: Logger = LoggerFactory.create('LciInstaller')
+  private readonly INSTALL_DIR: string =
+    path.join(os.homedir(), '.local', 'bin')
+  private readonly _log: Logger = LoggerFactory.create(LciInstaller.name)
 
-  private _version: string
-  private _cmakeProvider: ICliExeNameProvider
-  private _makeProvider: ICliExeNameProvider
-  private _lciFinder: IExecutableFileFinder
-  private _cache: ICache
+  private readonly _version: string
+  private readonly _cmakeProvider: ICliExeNameProvider
+  private readonly _makeProvider: ICliExeNameProvider
+  private readonly _lciFinder: IExecutableFileFinder
+  private readonly _cache: ICache
 
   constructor(
     version: string,
@@ -57,6 +58,6 @@ export default class LciInstaller extends InstallerBase {
 
     const execFilePath: string = this._lciFinder.find(repoDir)
     addPath(path.dirname(execFilePath))
-    this._cache.cache(execFilePath)
+    return this._cache.cache(execFilePath)
   }
 }
