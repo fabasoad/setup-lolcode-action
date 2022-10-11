@@ -1,62 +1,46 @@
-import glob, { IOptions } from 'glob'
-import itParam from 'mocha-param'
-import path from 'path'
-import { restore, SinonStub, stub } from 'sinon'
 import ExecutableFileFinder from '../ExecutableFileFinder'
+import fs from 'fs'
+import itParam from 'mocha-param'
 
-interface INegativeTestFixture {
-  message: string
-  suffix: string
-}
+const TEST_EXE = 'file.exe'
 
-describe('ExecutableFileFinder', () => {
-  const SUFFIX: string = '3ttg37ne'
-  const items: INegativeTestFixture[] = [{
-    message: 'There are more than 1 execution file has been found',
-    suffix: SUFFIX
-  }, {
-    message: 'Execution file has not been found',
-    suffix: 'u4h0t03e'
-  }]
-  let globSyncStub: SinonStub<[pattern: string, options?: IOptions], string[]>
+jest.mock('fs', () => ({
+  readdirSync: jest.fn((dirPath: string) => {
+    switch (dirPath) {
+    case 'folder1': return ['file.txt', 'folder2']
+    case 'folder1/folder2': return [TEST_EXE]
+    default: return []
+    }
+  }),
+  statSync: jest.fn((dirPath: string) => ({
+    isDirectory: jest.fn(() => dirPath.endsWith('folder1') ||
+        dirPath.endsWith('folder2'))
+  }))
+}))
+
+describe('ExecutableFileFinder::find', () => {
+  let finder: ExecutableFileFinder
 
   beforeEach(() => {
-    globSyncStub = stub(glob, 'sync')
+    (fs.readdirSync as jest.Mock).mockClear();
+    (fs.statSync as jest.Mock).mockClear()
+    const cliName = '1clx8w43'
+    finder = new ExecutableFileFinder(cliName, {
+      getExeFileName: () => TEST_EXE
+    })
   })
 
   it('should find successfully', () => {
-    const folderPath: string = '4se2ov6f'
-    const cliName: string = '1clx8w43'
-    const files: string[] = [cliName + SUFFIX, cliName]
-    globSyncStub.returns(files)
-    const finder: ExecutableFileFinder = new ExecutableFileFinder(cliName, {
-      getExeFileName: (): string => SUFFIX
-    })
-    const actual: string = finder.find(folderPath)
-    expect(globSyncStub.withArgs(
-      `${folderPath}${path.sep}**${path.sep}${cliName}*`).callCount).toBe(1)
-    expect(actual).toBe(files[0])
+    const dirPath = 'folder1'
+    const actual: string = finder.find(dirPath)
+    expect(actual).toBe(`folder1/folder2/${TEST_EXE}`)
   })
 
-  itParam('should throw error (${value.message})',
-    items, (item: INegativeTestFixture) => {
-      const folderPath: string = '4se2ov6f'
-      const cliName: string = '1clx8w43'
-      const files: string[] = [cliName + SUFFIX, `gt11c1zr${SUFFIX}`]
-      globSyncStub.returns(files)
-      const finder: ExecutableFileFinder = new ExecutableFileFinder(cliName, {
-        getExeFileName: (): string => item.suffix
-      })
-      try {
-        finder.find(folderPath)
-      } catch (e) {
-        expect((<Error>e).message).toContain(item.message)
-        expect(globSyncStub.withArgs(
-          `${folderPath}${path.sep}**${path.sep}${cliName}*`).callCount).toBe(1)
-        return
-      }
-      fail()
+  itParam(
+    'should not find successfully (${value})',
+    ['folder3', null],
+    (dirPath: string) => {
+      expect(() => finder.find(dirPath)).toThrow(
+        `Execution file has not been found under ${dirPath} folder`)
     })
-
-  afterEach(() => restore())
 })
