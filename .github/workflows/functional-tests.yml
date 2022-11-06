@@ -7,10 +7,9 @@ on:
       - 'main'
       - 'fix-**'
       - 'feature-**'
-      - 'pre-commit-ci-update-config'
 
 jobs:
-  functional_tests:
+  run-script:
     name: Run script
     timeout-minutes: 15
     strategy:
