@@ -17,7 +17,7 @@ runs:
       id: info
       run: |
         LCI_INSTALLED=$(if command -v lci >/dev/null 2>&1; then echo true; else echo false; fi)
-        echo "LCI_INSTALLED=$KITTEN_INSTALLED" >> $GITHUB_OUTPUT
+        echo "LCI_INSTALLED=$LCI_INSTALLED" >> $GITHUB_OUTPUT
         mkdir -p "$RUNNER_TEMP/lci"
         echo "LCI_PATH=$RUNNER_TEMP/lci" >> $GITHUB_OUTPUT
       shell: bash
