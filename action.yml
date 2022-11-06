@@ -18,8 +18,9 @@ runs:
       run: |
         LCI_INSTALLED=$(if command -v lci >/dev/null 2>&1; then echo true; else echo false; fi)
         echo "LCI_INSTALLED=$LCI_INSTALLED" >> $GITHUB_OUTPUT
-        mkdir -p "$RUNNER_TEMP/lci"
-        echo "LCI_PATH=$RUNNER_TEMP/lci" >> $GITHUB_OUTPUT
+        lci_path="$RUNNER_TEMP/$(date '+%Y%m%d%H%M%S')"
+        mkdir -p $lci_path
+        echo "LCI_PATH=$lci_path" >> $GITHUB_OUTPUT
       shell: bash
     - name: Clone LCI repository
       if: ${{ steps.info.outputs.LCI_INSTALLED == 'false' }}
