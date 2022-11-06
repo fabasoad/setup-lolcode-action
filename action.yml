@@ -11,5 +11,32 @@ inputs:
     required: false
     default: '0.11.2'
 runs:
-  using: 'node16'
-  main: 'dist/index.js'
+  using: 'composite'
+  steps:
+    - name: Collect info
+      id: info
+      run: |
+        LCI_INSTALLED=$(if command -v lci >/dev/null 2>&1; then echo true; else echo false; fi)
+        echo "LCI_INSTALLED=$LCI_INSTALLED" >> $GITHUB_OUTPUT
+        lci_path="$RUNNER_TEMP/$(date '+%Y%m%d%H%M%S')"
+        mkdir -p $lci_path
+        echo "LCI_PATH=$lci_path" >> $GITHUB_OUTPUT
+      shell: bash
+    - name: Clone LCI repository
+      if: ${{ steps.info.outputs.LCI_INSTALLED == 'false' }}
+      run: git clone --depth 1 --branch v${{ inputs.version }} https://github.com/justinmeza/lci.git "${{ steps.info.outputs.LCI_PATH }}"
+      shell: bash
+    - name: Build LCI
+      if: ${{ steps.info.outputs.LCI_INSTALLED == 'false' }}
+      run: |
+        cmake .
+        make
+      shell: bash
+      working-directory: ${{ steps.info.outputs.LCI_PATH }}
+    - name: Add LCI to PATH
+      if: ${{ steps.info.outputs.LCI_INSTALLED == 'false' }}
+      run: |
+        exe_path=$(find "${{ steps.info.outputs.LCI_PATH }}" -name "lci")
+        bin_path=$(dirname $exe_path)
+        echo "$bin_path" >> $GITHUB_PATH
+      shell: bash
