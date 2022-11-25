@@ -6,6 +6,11 @@
 
 This action sets up a [LOLCODE](http://www.lolcode.org/) interpreter called [LCI](https://github.com/justinmeza/lci).
 
+## Prerequisites
+
+The following tools have to be installed for successful work of this GitHub action:
+[git](https://git-scm.com), [cmake](https://cmake.org), [make](https://www.gnu.org/software/make/manual/make.html).
+
 ## Inputs
 
 | Name    | Required | Description                                                                  | Default  | Possible values         |
@@ -43,7 +48,7 @@ jobs:
 
 ### Result
 
-```shell
+```text
 Run lci ./hello-world.lc
 Hello World!
 ```

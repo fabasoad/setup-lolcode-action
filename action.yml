@@ -13,30 +13,34 @@ inputs:
 runs:
   using: 'composite'
   steps:
+    - name: Fail
+      uses: actions/github-script@v6
+      if: ${{ runner.os == 'Windows' }}
+      with:
+        script: core.setFailed('${{ runner.os }} ${{ runner.arch }} is not supported');
     - name: Collect info
       id: info
+      if: ${{ runner.os != 'Windows' }}
       run: |
         LCI_INSTALLED=$(if command -v lci >/dev/null 2>&1; then echo true; else echo false; fi)
         echo "LCI_INSTALLED=$LCI_INSTALLED" >> $GITHUB_OUTPUT
-        lci_path="$RUNNER_TEMP/$(date '+%Y%m%d%H%M%S')"
+        lci_path="$GITHUB_WORKSPACE/lci"
         mkdir -p $lci_path
         echo "LCI_PATH=$lci_path" >> $GITHUB_OUTPUT
-      shell: bash
-    - name: Clone LCI repository
-      if: ${{ steps.info.outputs.LCI_INSTALLED == 'false' }}
-      run: git clone --depth 1 --branch v${{ inputs.version }} https://github.com/justinmeza/lci.git "${{ steps.info.outputs.LCI_PATH }}"
-      shell: bash
-    - name: Build LCI
-      if: ${{ steps.info.outputs.LCI_INSTALLED == 'false' }}
+      shell: sh
+    - name: Download LCI
+      if: ${{ runner.os != 'Windows' && steps.info.outputs.LCI_INSTALLED == 'false' }}
+      uses: actions/checkout@v3
+      with:
+        repository: justinmeza/lci
+        ref: v${{ inputs.version }}
+        fetch-depth: 1
+        path: lci
+    - name: Install LCI
+      if: ${{ runner.os != 'Windows' && steps.info.outputs.LCI_INSTALLED == 'false' }}
       run: |
         cmake .
         make
-      shell: bash
+        echo "${{ steps.info.outputs.LCI_PATH }}" >> $GITHUB_PATH
+      shell: sh
       working-directory: ${{ steps.info.outputs.LCI_PATH }}
-    - name: Add LCI to PATH
-      if: ${{ steps.info.outputs.LCI_INSTALLED == 'false' }}
-      run: |
-        exe_path=$(find "${{ steps.info.outputs.LCI_PATH }}" -name "lci")
-        bin_path=$(dirname $exe_path)
-        echo "$bin_path" >> $GITHUB_PATH
-      shell: bash
