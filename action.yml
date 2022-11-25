@@ -43,5 +43,6 @@ runs:
         exe_path=$(find "${{ steps.info.outputs.LCI_PATH }}" -name "lci")
         echo "exe_path: $exe_path"
         bin_path=$(dirname $exe_path)
+        echo "bin_path: $bin_path"
         echo "$bin_path" >> $GITHUB_PATH
       shell: sh
