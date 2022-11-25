@@ -5,8 +5,7 @@ on:
   push:
     branches:
       - 'main'
-      - 'fix-**'
-      - 'feature-**'
+  pull_request:
 
 jobs:
   run-script:
@@ -51,3 +50,4 @@ jobs:
           version: ${{ matrix.version }}
       - name: Run script
         run: lci ./hello-world.lc
+        shell: sh
