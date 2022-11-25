@@ -48,7 +48,7 @@ jobs:
 
 ### Result
 
-```shell
+```text
 Run lci ./hello-world.lc
 Hello World!
 ```

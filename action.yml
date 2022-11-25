@@ -36,7 +36,7 @@ runs:
         ref: v${{ inputs.version }}
         fetch-depth: 1
         path: lci
-    - name: Build LCI
+    - name: Install LCI
       if: ${{ runner.os != 'Windows' && steps.info.outputs.LCI_INSTALLED == 'false' }}
       run: |
         cmake .
