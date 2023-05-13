@@ -3,7 +3,7 @@
 [![Stand With Ukraine](https://raw.githubusercontent.com/vshymanskyy/StandWithUkraine/main/badges/StandWithUkraine.svg)](https://stand-with-ukraine.pp.ua)
 ![GitHub release](https://img.shields.io/github/v/release/fabasoad/setup-lolcode-action?include_prereleases)
 ![Functional Tests](https://github.com/fabasoad/setup-lolcode-action/workflows/Functional%20Tests/badge.svg)
-[![pre-commit.ci status](https://results.pre-commit.ci/badge/github/fabasoad/setup-lolcode-action/main.svg)](https://results.pre-commit.ci/latest/github/fabasoad/setup-lolcode-action/main)
+![pre-commit](https://github.com/fabasoad/setup-lolcode-action/actions/workflows/pre-commit.yml/badge.svg)
 
 This action sets up a [LOLCODE](http://www.lolcode.org/) interpreter called [LCI](https://github.com/justinmeza/lci).
 
@@ -15,7 +15,7 @@ The following tools have to be installed for successful work of this GitHub acti
 ## Inputs
 
 | Name    | Required | Description                                                                  | Default  | Possible values         |
-|---------|----------|------------------------------------------------------------------------------|----------|-------------------------|
+| ------- | -------- | ---------------------------------------------------------------------------- | -------- | ----------------------- |
 | version | No       | LCI version that can be found [here](https://github.com/justinmeza/lci/tags) | `0.11.2` | `0.9.2`, `0.10.5`, etc. |
 
 ## Example usage
@@ -57,7 +57,7 @@ Hello World!
 ## Unsupported LCI versions
 
 | OS      | Version                                       |
-|---------|-----------------------------------------------|
+| ------- | --------------------------------------------- |
 | Windows | All                                           |
 | Linux   | 0.9.1                                         |
 | MacOS   | 0.9.1, 0.10.1, 0.10.2, 0.10.3, 0.10.4, 0.11.1 |
