@@ -1,17 +1,17 @@
 ---
-name: 'Setup LOLCODE'
+name: "Setup LOLCODE"
 author: Yevhen Fabizhevskyi
-description: 'This action sets up a LOLCODE interpreter called LCI.'
+description: "This action sets up a LOLCODE interpreter called LCI."
 branding:
   icon: terminal
   color: gray-dark
 inputs:
   version:
-    description: 'LCI version.'
+    description: "LCI version."
     required: false
-    default: '0.11.2'
+    default: "0.11.2"
 runs:
-  using: 'composite'
+  using: "composite"
   steps:
     - name: Fail
       uses: actions/github-script@v6
