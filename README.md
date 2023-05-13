@@ -14,9 +14,11 @@ The following tools have to be installed for successful work of this GitHub acti
 
 ## Inputs
 
+<!-- prettier-ignore-start -->
 | Name    | Required | Description                                                                  | Default  | Possible values         |
-| ------- | -------- | ---------------------------------------------------------------------------- | -------- | ----------------------- |
+|---------|----------|------------------------------------------------------------------------------|----------|-------------------------|
 | version | No       | LCI version that can be found [here](https://github.com/justinmeza/lci/tags) | `0.11.2` | `0.9.2`, `0.10.5`, etc. |
+<!-- prettier-ignore-end -->
 
 ## Example usage
 
@@ -56,8 +58,10 @@ Hello World!
 
 ## Unsupported LCI versions
 
+<!-- prettier-ignore-start -->
 | OS      | Version                                       |
-| ------- | --------------------------------------------- |
+|---------|-----------------------------------------------|
 | Windows | All                                           |
 | Linux   | 0.9.1                                         |
 | MacOS   | 0.9.1, 0.10.1, 0.10.2, 0.10.3, 0.10.4, 0.11.1 |
+<!-- prettier-ignore-end -->
