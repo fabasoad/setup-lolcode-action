@@ -30,7 +30,7 @@ runs:
       shell: sh
     - name: Download LCI
       if: ${{ runner.os != 'Windows' && steps.info.outputs.LCI_INSTALLED == 'false' }}
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
       with:
         repository: justinmeza/lci
         ref: v${{ inputs.version }}
