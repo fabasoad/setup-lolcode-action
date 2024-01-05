@@ -14,10 +14,9 @@ runs:
   using: "composite"
   steps:
     - name: Fail
-      uses: actions/github-script@v7
       if: ${{ runner.os == 'Windows' }}
-      with:
-        script: core.setFailed('${{ runner.os }} ${{ runner.arch }} is not supported');
+      run: echo "::error::${RUNNER_OS} ${RUNNER_ARCH} is not supported" && exit 1
+      shell: sh
     - name: Collect info
       id: info
       if: ${{ runner.os != 'Windows' }}
