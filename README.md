@@ -2,8 +2,8 @@
 
 [![Stand With Ukraine](https://raw.githubusercontent.com/vshymanskyy/StandWithUkraine/main/badges/StandWithUkraine.svg)](https://stand-with-ukraine.pp.ua)
 ![GitHub release](https://img.shields.io/github/v/release/fabasoad/setup-lolcode-action?include_prereleases)
-![Functional Tests](https://github.com/fabasoad/setup-lolcode-action/workflows/Functional%20Tests/badge.svg)
-![pre-commit](https://github.com/fabasoad/setup-lolcode-action/actions/workflows/pre-commit.yml/badge.svg)
+![functional-tests](https://github.com/fabasoad/setup-lolcode-action/actions/workflows/functional-tests.yml/badge.svg)
+![linting](https://github.com/fabasoad/setup-lolcode-action/actions/workflows/linting.yml/badge.svg)
 
 This action sets up a [LOLCODE](http://www.lolcode.org/) interpreter called [LCI](https://github.com/justinmeza/lci).
 
