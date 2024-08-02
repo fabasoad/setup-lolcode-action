@@ -19,16 +19,15 @@ runs:
       shell: sh
     - name: Collect info
       id: info
-      if: ${{ runner.os != 'Windows' }}
       run: |
-        LCI_INSTALLED=$(if command -v lci >/dev/null 2>&1; then echo true; else echo false; fi)
-        echo "LCI_INSTALLED=$LCI_INSTALLED" >> $GITHUB_OUTPUT
+        lci_installed=$(if command -v lci >/dev/null 2>&1; then echo true; else echo false; fi)
+        echo "lci-installed=${lci_installed}" >> "$GITHUB_OUTPUT"
         lci_path="$GITHUB_WORKSPACE/lci"
-        mkdir -p $lci_path
-        echo "LCI_PATH=$lci_path" >> $GITHUB_OUTPUT
+        mkdir -p "${lci_path}"
+        echo "lci-path=${lci_path}" >> "$GITHUB_OUTPUT"
       shell: sh
     - name: Download LCI
-      if: ${{ runner.os != 'Windows' && steps.info.outputs.LCI_INSTALLED == 'false' }}
+      if: ${{ steps.info.outputs.lci-installed == 'false' }}
       uses: actions/checkout@v4
       with:
         repository: justinmeza/lci
@@ -36,10 +35,10 @@ runs:
         fetch-depth: 1
         path: lci
     - name: Install LCI
-      if: ${{ runner.os != 'Windows' && steps.info.outputs.LCI_INSTALLED == 'false' }}
+      if: ${{ steps.info.outputs.lci-installed == 'false' }}
       run: |
         cmake .
         make
-        echo "${{ steps.info.outputs.LCI_PATH }}" >> $GITHUB_PATH
+        echo "${{ steps.info.outputs.lci-path }}" >> "$GITHUB_PATH"
       shell: sh
-      working-directory: ${{ steps.info.outputs.LCI_PATH }}
+      working-directory: ${{ steps.info.outputs.lci-path }}
