@@ -50,6 +50,9 @@ jobs:
       matrix:
         os: ["ubuntu", "macos"]
         version: ${{ fromJSON(needs.get-versions.outputs.versions) }}
+        exclude:
+          - os: "macos"
+            version: "0.11.1"
     steps:
       - name: Checkout ${{ github.repository }}
         uses: actions/checkout@v4
