@@ -1,7 +1,7 @@
 ---
-name: "Setup LOLCODE"
+name: Setup LOLCODE
 author: Yevhen Fabizhevskyi
-description: "This action sets up a LOLCODE interpreter called lci."
+description: This action sets up a LOLCODE interpreter called LCI.
 branding:
   icon: terminal
   color: gray-dark
@@ -31,7 +31,9 @@ runs:
   steps:
     - name: Fail
       if: ${{ runner.os == 'Windows' }}
-      run: echo "::error::${RUNNER_OS} ${RUNNER_ARCH} is not supported" && exit 1
+      run: |
+        echo "::error title=OS is not supported::${RUNNER_OS} ${RUNNER_ARCH} is not supported"
+        exit 1
       shell: sh
 
     - name: Collect info
