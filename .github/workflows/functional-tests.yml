@@ -4,48 +4,52 @@ name: Functional Tests
 on: # yamllint disable-line rule:truthy
   push:
     branches:
-      - "main"
+      - main
   pull_request:
+    paths:
+      - .github/workflows/functional-tests.yml
+      - src/**
+      - action.yml
+  schedule:
+    # Every Friday at 09:00 JST
+    - cron: "0 0 * * 5"
+  workflow_dispatch: {}
 
 defaults:
   run:
     shell: sh
 
 jobs:
+  get-versions:
+    name: Get 3 latest versions
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    outputs:
+      versions: ${{ steps.prepare-list.outputs.versions }}
+    steps:
+      - name: Prepare list
+        id: prepare-list
+        env:
+          RELEASES_AMOUNT: "3"
+          TARGET_REPO: "justinmeza/lci"
+        run: |
+          versions=$(curl -sL \
+            -H "Accept: application/vnd.github+json" \
+            -H "Authorization: Bearer ${{ github.token }}" \
+            -H "X-GitHub-Api-Version: 2022-11-28" \
+            "https://api.github.com/repos/${TARGET_REPO}/tags" \
+            | jq -c -r --arg n "${RELEASES_AMOUNT}" '.[0:($n | tonumber)] | map(sub("^v"; "")) | . += ["latest"]')
+          echo "versions=${versions}" >> "$GITHUB_OUTPUT"
   run-script:
     name: Run script
+    needs: [get-versions]
+    runs-on: ${{ matrix.os }}-latest
     timeout-minutes: 15
     strategy:
       fail-fast: false
       matrix:
-        include:
-          - os: "ubuntu-latest"
-            version: "0.9.2"
-          - os: "ubuntu-latest"
-            version: "0.9.3"
-          - os: "ubuntu-latest"
-            version: "0.10.1"
-          - os: "ubuntu-latest"
-            version: "0.10.2"
-          - os: "ubuntu-latest"
-            version: "0.10.3"
-          - os: "ubuntu-latest"
-            version: "0.10.4"
-          - os: "ubuntu-latest"
-            version: "0.10.5"
-          - os: "ubuntu-latest"
-            version: "0.11.1"
-          - os: "ubuntu-latest"
-            version: "0.11.2"
-          - os: "macos-latest"
-            version: "0.9.2"
-          - os: "macos-latest"
-            version: "0.9.3"
-          - os: "macos-latest"
-            version: "0.10.5"
-          - os: "macos-latest"
-            version: "0.11.2"
-    runs-on: ${{ matrix.os }}
+        os: ["ubuntu", "macos"]
+        version: ${{ fromJSON(needs.get-versions.outputs.versions) }}
     steps:
       - name: Checkout ${{ github.repository }}
         uses: actions/checkout@v4
@@ -55,3 +59,39 @@ jobs:
           version: ${{ matrix.version }}
       - name: Run script
         run: lci ./hello-world.lc
+  test-force:
+    name: Test force
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    strategy:
+      fail-fast: false
+      matrix:
+        force: ["true", "false"]
+    steps:
+      - name: Checkout ${{ github.repository }}
+        uses: actions/checkout@v4
+      - name: Setup LCI 1
+        id: setup-lolcode-1
+        uses: ./
+        with:
+          version: "0.11.2"
+      - name: Setup LCI 2
+        id: setup-lolcode-2
+        uses: ./
+        with:
+          version: "0.11.2"
+          force: ${{ matrix.force }}
+      - name: Test action completion
+        run: |
+          test_equal() {
+            if [ "${2}" != "${3}" ]; then
+              echo "::error title=${1}::Expected: ${3}. Actual: ${2}."
+              exit 1
+            fi
+          }
+          test_equal "Wrong \"installed\" output from setup-lolcode-1" \
+            "${{ steps.setup-lolcode-1.outputs.installed }}" \
+            "true"
+          test_equal "Wrong \"installed\" output from setup-lolcode-2" \
+            "${{ steps.setup-lolcode-2.outputs.installed }}" \
+            "${{ matrix.force }}"
