@@ -1,44 +1,81 @@
 ---
-name: "Setup LOLCODE"
+name: Setup LOLCODE
 author: Yevhen Fabizhevskyi
-description: "This action sets up a LOLCODE interpreter called LCI."
+description: This action sets up a LOLCODE interpreter called LCI.
 branding:
   icon: terminal
   color: gray-dark
 inputs:
   version:
-    description: "LCI version."
+    description: LCI version. Defaults to the latest version.
     required: false
-    default: "0.11.2"
+    default: "latest"
+  force:
+    description: |
+      If "false" skips installation if LCI is already installed. If "true"
+      installs LCI in any case. Defaults to "false".
+    required: false
+    default: "false"
+  github-token:
+    description: |
+      GitHub token that is used to send requests to GitHub API such as getting
+      latest release. Defaults to the token provided by GitHub Actions environment.
+    required: false
+    default: ${{ github.token }}
+outputs:
+  installed:
+    description: Whether LCI was installed or not.
+    value: "${{ steps.install-lci.outcome == 'success' }}"
 runs:
   using: "composite"
   steps:
     - name: Fail
       if: ${{ runner.os == 'Windows' }}
-      run: echo "::error::${RUNNER_OS} ${RUNNER_ARCH} is not supported" && exit 1
+      run: |
+        echo "::error title=OS is not supported::${RUNNER_OS} ${RUNNER_ARCH} is not supported"
+        exit 1
       shell: sh
+
     - name: Collect info
       id: info
-      run: |
-        lci_installed=$(if command -v lci >/dev/null 2>&1; then echo true; else echo false; fi)
-        echo "lci-installed=${lci_installed}" >> "$GITHUB_OUTPUT"
-        lci_path="$GITHUB_WORKSPACE/lci"
-        mkdir -p "${lci_path}"
-        echo "lci-path=${lci_path}" >> "$GITHUB_OUTPUT"
+      env:
+        INPUT_FORCE: "${{ inputs.force }}"
+      run: ./collect-info.sh "${INPUT_FORCE}"
       shell: sh
+      working-directory: "${{ github.action_path }}/src"
+
+    - name: Setup jq
+      if: ${{ steps.info.outputs.bin-installed == 'false' }}
+      uses: dcarbone/install-jq-action@v3
+
+    - name: Get latest release
+      if: ${{ steps.info.outputs.bin-installed == 'false' && inputs.version == 'latest' }}
+      id: latest-release
+      env:
+        INPUT_GITHUB_TOKEN: "${{ inputs.github-token }}"
+      run: ./get-latest-release.sh "justinmeza/lci" "${INPUT_GITHUB_TOKEN}"
+      shell: sh
+      working-directory: "${{ github.action_path }}/src"
+
     - name: Download LCI
-      if: ${{ steps.info.outputs.lci-installed == 'false' }}
+      if: ${{ steps.info.outputs.bin-installed == 'false' }}
       uses: actions/checkout@v4
       with:
-        repository: justinmeza/lci
-        ref: v${{ inputs.version }}
+        repository: "justinmeza/lci"
+        ref: ${{ format('v{0}', inputs.version == 'latest' && steps.latest-release.outputs.version || inputs.version) }}
         fetch-depth: 1
-        path: lci
+        path: ${{ steps.info.outputs.bin-dir }}
+
     - name: Install LCI
-      if: ${{ steps.info.outputs.lci-installed == 'false' }}
+      if: ${{ steps.info.outputs.bin-installed == 'false' }}
+      id: install-lci
       run: |
         cmake .
         make
-        echo "${{ steps.info.outputs.lci-path }}" >> "$GITHUB_PATH"
+        echo "$(pwd)" >> "$GITHUB_PATH"
       shell: sh
-      working-directory: ${{ steps.info.outputs.lci-path }}
+      working-directory: ${{ steps.info.outputs.bin-path }}
+
+    - name: Print version
+      run: lci -v
+      shell: sh

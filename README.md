@@ -8,17 +8,43 @@
 
 This action sets up a [LOLCODE](http://www.lolcode.org/) interpreter called [LCI](https://github.com/justinmeza/lci).
 
+## Unsupported LCI versions
+
+<!-- prettier-ignore-start -->
+| OS      | Version                                       |
+|---------|-----------------------------------------------|
+| Windows | All                                           |
+| Linux   | 0.9.1                                         |
+| macOS   | 0.9.1, 0.10.1, 0.10.2, 0.10.3, 0.10.4, 0.11.1 |
+<!-- prettier-ignore-end -->
+
 ## Prerequisites
 
 The following tools have to be installed for successful work of this GitHub action:
-[git](https://git-scm.com), [cmake](https://cmake.org), [make](https://www.gnu.org/software/make/manual/make.html).
+[cmake](https://cmake.org), [make](https://www.gnu.org/software/make/manual/make.html).
 
 ## Inputs
 
+```yaml
+- uses: fabasoad/setup-lolcode-action@v1
+  with:
+    # (Optional) LCI version. Defaults to the latest version.
+    version: "0.11.2"
+    # (Optional) If "false" skips installation if LCI is already installed.
+    # If "true" installs LCI in any case. Defaults to "false".
+    force: "false"
+    # (Optional) GitHub token that is used to send requests to GitHub API such
+    # as getting latest release. Defaults to the token provided by GitHub Actions
+    # environment.
+    github-token: "${{ github.token }}"
+```
+
+## Outputs
+
 <!-- prettier-ignore-start -->
-| Name    | Required | Description                                                                  | Default  | Possible values         |
-|---------|----------|------------------------------------------------------------------------------|----------|-------------------------|
-| version | No       | LCI version that can be found [here](https://github.com/justinmeza/lci/tags) | `0.11.2` | `0.9.2`, `0.10.5`, etc. |
+| Name      | Description                      | Example |
+|-----------|----------------------------------|---------|
+| installed | Whether LCI was installed or not | `true`  |
 <!-- prettier-ignore-end -->
 
 ## Example usage
@@ -44,8 +70,8 @@ jobs:
     name: Setup
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@main
-      - uses: fabasoad/setup-lolcode-action@main
+      - uses: actions/checkout@v4
+      - uses: fabasoad/setup-lolcode-action@v1
       - name: Run script
         run: lci ./hello-world.lc
 ```
@@ -56,13 +82,3 @@ jobs:
 Run lci ./hello-world.lc
 Hello World!
 ```
-
-## Unsupported LCI versions
-
-<!-- prettier-ignore-start -->
-| OS      | Version                                       |
-|---------|-----------------------------------------------|
-| Windows | All                                           |
-| Linux   | 0.9.1                                         |
-| MacOS   | 0.9.1, 0.10.1, 0.10.2, 0.10.3, 0.10.4, 0.11.1 |
-<!-- prettier-ignore-end -->
