@@ -47,6 +47,7 @@ runs:
     - name: Setup dependencies
       if: ${{ runner.os == 'Linux' }}
       run: sudo apt-get install libreadline-dev
+      shell: sh
 
     - name: Setup jq
       if: ${{ steps.info.outputs.bin-installed == 'false' }}
