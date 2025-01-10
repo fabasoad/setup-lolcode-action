@@ -30,8 +30,8 @@ The following tools have to be installed for successful work of this GitHub acti
   with:
     # (Optional) LCI version. Defaults to the latest version.
     version: "0.11.2"
-    # (Optional) If "false" skips installation if LCI is already installed.
-    # If "true" installs LCI in any case. Defaults to "false".
+    # (Optional) If "true" it installs LCI even if it is already installed on a
+    # runner. Otherwise, skips installation.
     force: "false"
     # (Optional) GitHub token that is used to send requests to GitHub API such
     # as getting latest release. Defaults to the token provided by GitHub Actions

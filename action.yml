@@ -12,8 +12,8 @@ inputs:
     default: "latest"
   force:
     description: |
-      If "false" skips installation if LCI is already installed. If "true"
-      installs LCI in any case. Defaults to "false".
+      If "true" it installs LCI even if it is already installed on a runner.
+      Otherwise, skips installation.
     required: false
     default: "false"
   github-token:
@@ -43,6 +43,11 @@ runs:
       run: ./collect-info.sh "${INPUT_FORCE}"
       shell: sh
       working-directory: "${{ github.action_path }}/src"
+
+    - name: Setup dependencies
+      if: ${{ steps.info.outputs.bin-installed == 'false' && runner.os == 'Linux' }}
+      run: sudo apt-get install libreadline-dev
+      shell: sh
 
     - name: Setup jq
       if: ${{ steps.info.outputs.bin-installed == 'false' }}
