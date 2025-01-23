@@ -52,7 +52,7 @@ The following tools have to be installed for successful work of this GitHub acti
 Let's try to run `hello-world.lc` file with the following content:
 
 ```cobol
-HAI 1.2
+HAI 1.3
   CAN HAS STDIO?
   VISIBLE "Hello World!"
 KTHXBYE
@@ -82,3 +82,7 @@ jobs:
 Run lci ./hello-world.lc
 Hello World!
 ```
+
+## Contributions
+
+![Alt](https://repobeats.axiom.co/api/embed/9b6c378bb5c49b5d03f785f2db871e5cd96e46f6.svg "Repobeats analytics image")
