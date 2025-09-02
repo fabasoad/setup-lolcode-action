@@ -55,7 +55,7 @@ jobs:
             version: "0.11.1"
     steps:
       - name: Checkout ${{ github.repository }}
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
       - name: Setup LCI
         uses: ./
         with:
@@ -72,7 +72,7 @@ jobs:
         force: ["true", "false"]
     steps:
       - name: Checkout ${{ github.repository }}
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
       - name: Setup LCI 1
         id: setup-lolcode-1
         uses: ./
