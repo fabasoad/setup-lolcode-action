@@ -29,6 +29,12 @@ outputs:
 runs:
   using: "composite"
   steps:
+    - name: Debug
+      run: |
+        which cmake
+        cmake --version
+      shell: sh
+
     - name: Fail
       if: ${{ runner.os == 'Windows' }}
       run: |
