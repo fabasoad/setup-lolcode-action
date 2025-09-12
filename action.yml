@@ -74,8 +74,9 @@ runs:
       if: ${{ steps.info.outputs.bin-installed == 'false' }}
       uses: actions/checkout@v5
       with:
-        repository: "justinmeza/lci"
-        ref: ${{ format('v{0}', inputs.version == 'latest' && steps.latest-release.outputs.version || inputs.version) }}
+        repository: "fabasoad/lci"
+        ref: "bump/cmake"
+        #        ref: ${{ format('v{0}', inputs.version == 'latest' && steps.latest-release.outputs.version || inputs.version) }}
         fetch-depth: 1
         path: ${{ steps.info.outputs.bin-dir }}
 
