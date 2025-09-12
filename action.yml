@@ -83,7 +83,7 @@ runs:
       if: ${{ steps.info.outputs.bin-installed == 'false' }}
       id: install-lci
       run: |
-        cmake .
+        cmake . -DCMAKE_POLICY_VERSION_MINIMUM=3.31
         make
         echo "$(pwd)" >> "$GITHUB_PATH"
       shell: sh
