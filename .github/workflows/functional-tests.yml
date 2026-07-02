@@ -24,6 +24,7 @@ jobs:
     name: Get 3 latest versions
     runs-on: ubuntu-latest
     timeout-minutes: 10
+    permissions: {}
     outputs:
       versions: ${{ steps.prepare-list.outputs.versions }}
     steps:
@@ -36,7 +37,7 @@ jobs:
           versions=$(curl -sL \
             -H "Accept: application/vnd.github+json" \
             -H "Authorization: Bearer ${{ github.token }}" \
-            -H "X-GitHub-Api-Version: 2022-11-28" \
+            -H "X-GitHub-Api-Version: 2026-03-10" \
             "https://api.github.com/repos/${TARGET_REPO}/tags" \
             | jq -c -r --arg n "${RELEASES_AMOUNT}" '[.[0:($n | tonumber)][].name] | map(sub("^v"; "")) | . += ["latest"]')
           echo "versions=${versions}" >> "$GITHUB_OUTPUT"
@@ -45,6 +46,8 @@ jobs:
     needs: [get-versions]
     runs-on: ${{ matrix.os }}-latest
     timeout-minutes: 15
+    permissions:
+      contents: read
     strategy:
       fail-fast: false
       matrix:
@@ -55,7 +58,9 @@ jobs:
             version: "0.11.1"
     steps:
       - name: Checkout ${{ github.repository }}
-        uses: actions/checkout@v5
+        uses: actions/checkout@v7
+        with:
+          persist-credentials: "false"
       - name: Setup LCI
         uses: ./
         with:
@@ -66,13 +71,17 @@ jobs:
     name: Test force
     runs-on: ubuntu-latest
     timeout-minutes: 5
+    permissions:
+      contents: read
     strategy:
       fail-fast: false
       matrix:
         force: ["true", "false"]
     steps:
       - name: Checkout ${{ github.repository }}
-        uses: actions/checkout@v5
+        uses: actions/checkout@v7
+        with:
+          persist-credentials: "false"
       - name: Setup LCI 1
         id: setup-lolcode-1
         uses: ./
@@ -85,6 +94,9 @@ jobs:
           version: "0.11.2"
           force: ${{ matrix.force }}
       - name: Test action completion
+        env:
+          SETUP_LOLCODE_1_OUTPUT_INSTALLED: "${{ steps.setup-lolcode-1.outputs.installed }}"
+          SETUP_LOLCODE_2_OUTPUT_INSTALLED: "${{ steps.setup-lolcode-2.outputs.installed }}"
         run: |
           test_equal() {
             if [ "${2}" != "${3}" ]; then
@@ -93,8 +105,8 @@ jobs:
             fi
           }
           test_equal "Wrong \"installed\" output from setup-lolcode-1" \
-            "${{ steps.setup-lolcode-1.outputs.installed }}" \
+            "${SETUP_LOLCODE_1_OUTPUT_INSTALLED}" \
             "true"
           test_equal "Wrong \"installed\" output from setup-lolcode-2" \
-            "${{ steps.setup-lolcode-2.outputs.installed }}" \
+            "${SETUP_LOLCODE_2_OUTPUT_INSTALLED}" \
             "${{ matrix.force }}"
