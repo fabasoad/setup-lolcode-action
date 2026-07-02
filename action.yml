@@ -59,7 +59,7 @@ runs:
 
     - name: Setup jq
       if: ${{ steps.info.outputs.bin-installed == 'false' }}
-      uses: dcarbone/install-jq-action@v3
+      uses: dcarbone/install-jq-action@4fcb5062d7ce9bc4382d1a352d19ba3ba2c317c1 # v4.0.1
 
     - name: Get latest release
       if: ${{ steps.info.outputs.bin-installed == 'false' && inputs.version == 'latest' }}
@@ -72,12 +72,13 @@ runs:
 
     - name: Download LCI
       if: ${{ steps.info.outputs.bin-installed == 'false' }}
-      uses: actions/checkout@v5
+      uses: actions/checkout@v7
       with:
         repository: "justinmeza/lci"
         ref: ${{ format('v{0}', inputs.version == 'latest' && steps.latest-release.outputs.version || inputs.version) }}
         fetch-depth: 1
         path: ${{ steps.info.outputs.bin-dir }}
+        persist-credentials: "false"
 
     - name: Install LCI
       if: ${{ steps.info.outputs.bin-installed == 'false' }}
