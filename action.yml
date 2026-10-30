@@ -72,7 +72,7 @@ runs:
 
     - name: Download LCI
       if: ${{ steps.info.outputs.bin-installed == 'false' }}
-      uses: actions/checkout@v7
+      uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
       with:
         repository: "justinmeza/lci"
         ref: ${{ format('v{0}', inputs.version == 'latest' && steps.latest-release.outputs.version || inputs.version) }}
@@ -84,7 +84,10 @@ runs:
       if: ${{ steps.info.outputs.bin-installed == 'false' }}
       id: install-lci
       run: |
-        cmake . -DCMAKE_POLICY_VERSION_MINIMUM=3.31
+        # GCC 14+ and Clang 16+ reject implicit function declarations by
+        # default, which older LCI sources (e.g. 0.11.1) still contain.
+        cmake . -DCMAKE_POLICY_VERSION_MINIMUM=3.31 \
+          -DCMAKE_C_FLAGS="-Wno-implicit-function-declaration"
         make
         echo "$(pwd)" >> "$GITHUB_PATH"
       shell: sh
